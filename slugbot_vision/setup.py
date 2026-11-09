@@ -25,6 +25,7 @@ setup(
     entry_points={
         'console_scripts': [
             'camera_streamer = slugbot_vision.camera_streamer:main',
+            'camera_receiver = slugbot_vision.camera_receiver:main',
         ],
     },
 )
