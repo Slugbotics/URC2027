@@ -7,7 +7,7 @@ from rclpy.callback_groups import MutuallyExclusiveCallbackGroup
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
 
-PORTS = [5000]
+PORTS = [5000, 5001]
 WIDTH = 640
 HEIGHT = 480
 
@@ -49,22 +49,18 @@ class CameraReceiver (Node):
         self.caps[index] = cv2.VideoCapture(self.pipelines[index], cv2.CAP_GSTREAMER)
     
     def receive_image(self, index):
-        self.get_logger().info("Line 1")
         cap = self.caps[index]
         if cap is None or not cap.isOpened():
             self.get_logger().error(f'Camera stream is not opened (index={index})', throttle_duration_sec=5.0)
             self.reconnect(index)
             return
         
-        self.get_logger().info("Line 2")
         ret, frame = cap.read()
-        self.get_logger().info("Line 3")
         if not ret:
             self.get_logger().error(f'Failed to read frame (index={index})', throttle_duration_sec=5.0)
             self.reconnect(index)
             return
 
-        self.get_logger().info("Line 4")
         self.image_publishers[index].publish(self.bridge.cv2_to_imgmsg(frame, encoding='bgr8'))
         cv2.imshow(f'Camera {index}', frame)
         cv2.waitKey(1)
