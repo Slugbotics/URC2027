@@ -5,9 +5,9 @@ from rclpy.executors import MultiThreadedExecutor
 from rclpy.duration import Duration
 from rclpy.callback_groups import MutuallyExclusiveCallbackGroup
 
-CAMERA_IDS = [0]
-PORTS = [5000]
-LAPTOP_IP = '192.168.1.2'
+CAMERA_IDS = [0, 1]
+PORTS = [5000, 5001]
+LAPTOP_IP = '192.168.1.2' # TODO: Change this
 WIDTH = 640
 HEIGHT = 480
 
